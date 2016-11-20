@@ -39,6 +39,7 @@
     }
     </style>
 
+    <title>{{title}} - Polymer Test</title>
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}"
                pattern="/:page"
@@ -87,6 +88,7 @@
     ],
     _routeChanged: function(page) {
       this.page = (!page) ? 'top' : this.pages.indexOf(page) != -1 ? page : '404';
+      this.title = this.page.charAt(0).toUpperCase() + this.page.slice(1);
     }
   });
   </script>
