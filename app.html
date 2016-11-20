@@ -48,6 +48,7 @@
     <app-drawer-layout fullbleed>
       <app-drawer>
         <iron-selector selected="{{page}}" attr-for-selected="name">
+          <a name="top" href="./">Top</a>
           <template is="dom-repeat" items="{{pages}}">
             <a name="{{item}}" href="{{item}}">{{item}}</a>
           </template>
@@ -63,6 +64,8 @@
         <iron-pages selected="{{page}}" attr-for-selected="name">
           <div name="top">Top</div>
           <div name="about">About</div>
+          <div name="anime">Anime</div>
+          <div name="404">Not Found</div>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -75,7 +78,7 @@
       pages: {
         type: Array,
         value: function() {
-          return ['top', 'about', 'anime'];
+          return ['about', 'anime'];
         }
       }
     },
@@ -83,7 +86,7 @@
       '_routeChanged(data.page)'
     ],
     _routeChanged: function(page) {
-      this.page = (page) ? page : 'top';
+      this.page = (!page) ? 'top' : this.pages.indexOf(page) != -1 ? page : '404';
     }
   });
   </script>
