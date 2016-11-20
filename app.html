@@ -3,6 +3,7 @@
 <link rel="import" href="bower_components/app-route/app-route.html">
 <link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
@@ -19,6 +20,23 @@
       color: white;
       --app-toolbar-font-size: 24px;
     }
+    app-drawer iron-selector {
+      margin: 0 20px;
+    }
+    app-drawer iron-selector a {
+      display: block;
+      padding: 0 16px;
+      line-height: 40px;
+      text-decoration: none;
+      color: var(--app-secondary-color);
+    }
+    app-drawer iron-selector a.iron-selected {
+      color: black;
+      font-weight: bold;
+    }
+    app-drawer iron-selector a.subroute {
+      padding-left: 32px;
+    }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -29,7 +47,11 @@
 
     <app-drawer-layout fullbleed>
       <app-drawer>
-        Test
+        <iron-selector selected="{{page}}" attr-for-selected="name">
+          <template is="dom-repeat" items="{{pages}}">
+            <a name="{{item}}" href="{{item}}">{{item}}</a>
+          </template>
+        </iron-selector>
       </app-drawer>
       <app-header-layout>
         <app-header condenses reveals effects="waterfall">
@@ -49,6 +71,14 @@
   <script>
   Polymer({
     is: 'x-app',
+    properties: {
+      pages: {
+        type: Array,
+        value: function() {
+          return ['top', 'about', 'anime'];
+        }
+      }
+    },
     observers: [
       '_routeChanged(data.page)'
     ],
