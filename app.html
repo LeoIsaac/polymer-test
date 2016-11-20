@@ -1,8 +1,17 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/app-route/app-location.html">
+<link rel="import" href="bower_components/app-route/app-route.html">
 
 <dom-module id="x-app">
   <template>
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}"
+               pattern="/:page"
+               data="{{data}}">
+    </app-route>
+
     <p>Hello, world!</p>
+    <p>{{data.page}}</p>
   </template>
 
   <script>
