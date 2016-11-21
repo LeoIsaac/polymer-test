@@ -1,0 +1,22 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="x-anime">
+  <template>
+    <iron-ajax auto
+               url="http://api.moemoe.tokyo/anime/v1/master/2016/4"
+               last-response="{{ajaxResponse}}">
+    </iron-ajax>
+
+    <h2>Anime</h2>
+    <template is="dom-repeat" items="[[ajaxResponse]]">
+      <h3><a href="[[item.public_url]]" target="_blank">[[item.title]]</a></h3>
+    </template>
+  </template>
+
+  <script>
+  Polymer({
+    is: 'x-anime'
+  });
+  </script>
+</dom-module>
