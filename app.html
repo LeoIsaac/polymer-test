@@ -39,19 +39,22 @@
     }
     </style>
 
-    <title>{{title}} - Polymer Test</title>
-    <app-location route="{{route}}"></app-location>
+    <app-location route="{{route}}" use-hash-as-path></app-location>
     <app-route route="{{route}}"
                pattern="/:page"
-               data="{{data}}">
+               data="{{pageData}}"
+               tail="{{subRoute}}">
+    </app-route>
+    <app-route route="{{subRoute}}"
+               pattern="/:id"
+               data="{{idData}}">
     </app-route>
 
     <app-drawer-layout fullbleed>
       <app-drawer>
         <iron-selector selected="{{page}}" attr-for-selected="name">
-          <a name="top" href="./">Top</a>
           <template is="dom-repeat" items="{{pages}}">
-            <a name="{{item}}" href="{{item}}">{{item}}</a>
+            <a name="{{item}}" href="#/{{item}}">{{toUpperCaser(item)}}</a>
           </template>
         </iron-selector>
       </app-drawer>
@@ -79,16 +82,26 @@
       pages: {
         type: Array,
         value: function() {
-          return ['about', 'anime'];
+          return ['top', 'about', 'anime'];
         }
       }
     },
+    attached: function() {
+      this.async(function () {
+        if(!this.route.path) {
+          this.set('route.path', '/top');
+        }
+      });
+    },
     observers: [
-      '_routeChanged(data.page)'
+      '_routeChanged(pageData.page)'
     ],
     _routeChanged: function(page) {
-      this.page = (!page) ? 'top' : this.pages.indexOf(page) != -1 ? page : '404';
-      this.title = this.page.charAt(0).toUpperCase() + this.page.slice(1);
+      this.page = this.pages.indexOf(page) != -1 ? page : '404';
+    },
+
+    toUpperCaser: function(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
     }
   });
   </script>
